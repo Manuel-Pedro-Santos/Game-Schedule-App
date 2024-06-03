@@ -1,0 +1,390 @@
+openapi: 3.1.0
+
+info:
+  title: OpenAPI Specification for Software Laboratory project
+  version: '0.3.0'
+
+externalDocs:
+  description: More information about Software Laboratory project API
+  url: https://github.com/isel-leic-ls/2324-2-common/wiki/Phase-2
+
+servers:
+  - url: http://localhost:9000
+
+paths:
+
+  /players/list:
+    get:
+      tags:
+        - Players
+      summary: gets the list of players.
+      parameters:
+        - in: path
+          name: skip
+          required: false
+          schema:
+            type: integer
+          description: The skip of players
+      responses:
+        200:
+          description: Returns the list of players
+        500:
+          description: Internal Server Error
+
+  /players/{id}:
+    get:
+      tags:
+        - Players
+      summary: gets the details of a specified player
+      responses:
+        200:
+          description: Returns the details of the specified player
+        400:
+          description: Invalid Parameter
+        500:
+          description: Internal Server Error
+
+  /players:
+    post:
+      tags:
+        - Create Player
+      summary: Creates a new player.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - username
+                - email
+              properties:
+                name:
+                  type: string
+                username:
+                  type: string
+                email:
+                  type: string
+      responses:
+        200:
+          description: Returns the player's token and the player's identifier
+        400:
+          description: Invalid Parameter || Email not valid || Existing Player
+        500:
+          description: Internal Server Error
+
+  /players/sessions/{id}:
+    get:
+      tags:
+        - Players
+      summary: Gets the sessions of a specified player
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The player ID
+      responses:
+        200:
+          description: Returns the sessions of the specified player
+        500:
+          description: Internal Server Error
+
+  /games/list:
+    get:
+      tags:
+        - Games
+      summary: Lists all games
+      responses:
+        200:
+          description: Returns a list of all games
+        500:
+          description: Internal Server Error
+
+  /games/details/{id}:
+    get:
+      tags:
+        - Games
+      summary: Gets the details of a specified game
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The game ID
+      responses:
+        200:
+          description: Returns the details of the game
+        400:
+          description: Invalid parameters
+        404:
+          description: Game not found
+        500:
+          description: Internal Server Error
+
+  /games/createGame:
+    post:
+      tags:
+        - Create Game
+      summary: Creates a new game
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - gameName
+                - gameDev
+                - gameGenre
+              properties:
+                gameName:
+                  type: string
+                gameDev:
+                  type: string
+                gameGenre:
+                  type: string
+      responses:
+        200:
+          description: Returns the game unique identifier
+        400:
+          description: Invalid parameter
+        500:
+          description: Internal Server Error
+
+  /games/getGameByName/{name}:
+    get:
+      tags:
+        - Games
+      summary: Gets a game by its name
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          description: The game name
+      responses:
+        200:
+          description: Returns the game with the specified name
+        500:
+          description: Internal Server Error
+
+  /games/listGames:
+    get:
+      tags:
+        - Games
+      summary: Lists all games
+      responses:
+        200:
+          description: Returns a list of all games
+        500:
+          description: Internal Server Error
+
+  /games/genres:
+    get:
+      tags:
+        - Games
+      summary: Gets all game genres
+      responses:
+        200:
+          description: Returns a list of all game genres
+        500:
+          description: Internal Server Error
+
+  /sessions/createSession:
+    post:
+      tags:
+        - Create Session
+      summary: Creates a new session from a game.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - playerID
+                - capacity
+                - gid
+                - date
+              properties:
+                playerID:
+                  type: integer
+                capacity:
+                  type: integer
+                gid:
+                  type: integer
+                date:
+                  type: string
+      responses:
+        200:
+          description: Returns the session unique identifier
+        400:
+          description: Invalid parameter
+        500:
+          description: Internal Server Error
+
+  /sessions/details/{id}:
+    get:
+      tags:
+        - Sessions
+      summary: gets the details of a specified session
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The session ID
+      responses:
+        200:
+          description: Returns the details of that session
+        400:
+          description: Invalid parameter
+        500:
+          description: Internal Server Error
+
+  /sessions/addPlayer:
+    post:
+      tags:
+        - Add Player
+      summary: Add a player to a specified session.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - sessionId
+              properties:
+                id:
+                  type: integer
+                sessionId:
+                  type: integer
+      responses:
+        200:
+          description: Returns the entire session
+        400:
+          description: Invalid parameter
+        500:
+          description: Internal Server Error
+
+  /sessions/listSessions/{gid}:
+    get:
+      tags:
+        - Lists all sessions
+      summary: Lists all of sessions.
+      parameters:
+        - in: path
+          name: gid
+          required: true
+          schema:
+            type: integer
+          description: The game ID
+      responses:
+        200:
+          description: Returns the list of sessions
+        400:
+          description: Invalid parameter
+        500:
+          description: Internal Server Error
+
+  /sessions/update/{id}:
+    post:
+      tags:
+        - Sessions
+      summary: Updates a specified session
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The session ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                capacity:
+                  type: integer
+                date:
+                  type: string
+      responses:
+        200:
+          description: Returns the updated session
+        500:
+          description: Internal Server Error
+
+  /sessions/delete/{id}:
+    delete:
+      tags:
+        - Sessions
+      summary: Deletes a specified session
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The session ID
+      responses:
+        200:
+          description: Returns a confirmation of the deletion
+        500:
+          description: Internal Server Error
+
+  /sessions/removePlayer:
+    delete:
+      tags:
+        - Sessions
+      summary: Removes a player from a session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - sessionId
+              properties:
+                id:
+                  type: integer
+                sessionId:
+                  type: integer
+      responses:
+        200:
+          description: Returns a confirmation of the player removal
+        500:
+          description: Internal Server Error
+
+  /sessions/checkSession:
+    post:
+      tags:
+        - Sessions
+      summary: Checks a session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
+      responses:
+        200:
+          description: Returns the session status
+        500:
+          description: Internal Server Error

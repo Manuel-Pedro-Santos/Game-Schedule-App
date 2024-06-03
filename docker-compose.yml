@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  kotlinapp:
+    container_name: schedule-app
+    image: manuelsantos17/img-ls-2324-2-42d-g05
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JDBC_DATABASE_URL: "JDBC_DATABASE_URL"
+    ports:
+      - "9000:9000"

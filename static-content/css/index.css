@@ -1,0 +1,53 @@
+/* General styles */
+body {
+    background-image: url("../imgs/Robot.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.navbar-nav .nav-right {
+    margin-left: auto; /* Move right side items to the right */
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+/* Navbar styles */
+#navBar {
+    background-image: url("../imgs/Robot.jpg");
+    display: flex;
+}
+
+/* Navlink styles */
+.nav-link {
+    display: flex;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+#navLink0 {
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#navLink0:hover, #navLink1:hover, #navLink2:hover, #navLink3:hover, #navLink4:hover, #navLink5:hover, #navLink6:hover, #navLink7:hover {
+    color: #0000b0; /* Change the text color to black on hover */
+}
+
+#navLink7 {
+    display: none;
+}
